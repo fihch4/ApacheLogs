@@ -3,6 +3,7 @@
 import mysql.connector
 from config import *
 
+
 class MySQLi:
     _connection = None
 
@@ -13,7 +14,9 @@ class MySQLi:
                                                        user=username,
                                                        password=password,
                                                        port=port,
-                                                       sql_mode ='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION')
+                                                       sql_mode='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION',
+                                                       auth_plugin='mysql_native_password'
+                                                       )
         except mysql.connector.Error as e:
             print("Error: Could not make a database link using " + username + "@" + hostname + ".")
 
@@ -55,4 +58,7 @@ class MySQLi:
     def __del__(self):
         if self._connection != None and self._connection.is_connected():
             self._connection.close()
+
+
+db = MySQLi(host, user, password, database_home)
 #
